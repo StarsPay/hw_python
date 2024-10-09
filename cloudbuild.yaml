@@ -1,8 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'images/myimage', '.']
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/images/myimage', '.']
 
-images: ['images/myimage']
+images: ['us-central1-docker.pkg.dev/$PROJECT_ID/images/myimage']
 
 options:
   logging: CLOUD_LOGGING_ONLY
