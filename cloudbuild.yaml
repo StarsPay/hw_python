@@ -1,12 +1,12 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/buoyant-notch-437915-p4/images/python-hello-world:latest', '.']
+    args: ['build', '-t', 'images/python-hello-world:latest', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/buoyant-notch-437915-p4/images/python-hello-world:latest']
+    args: ['push', 'images/python-hello-world:latest']
 
 images:
-  - 'gcr.io/buoyant-notch-437915-p4/images/python-hello-world:latest'
+  - 'images/python-hello-world:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
