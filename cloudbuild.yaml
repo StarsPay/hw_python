@@ -7,3 +7,6 @@ steps:
 
 images:
   - 'gcr.io/buoyant-notch-437915-p4/images/python-hello-world:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
