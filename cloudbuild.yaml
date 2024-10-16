@@ -1,11 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/images/test_python:${_TIMESTAMP}', '.']
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/images/test_python', '.']
 
 images: ['us-central1-docker.pkg.dev/$PROJECT_ID/images/test_python:${_TIMESTAMP}']
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
-substitutions:
-  _TIMESTAMP: $(date +%Y%m%d%H%M%S)
