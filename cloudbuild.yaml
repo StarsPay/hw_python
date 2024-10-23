@@ -1,8 +1,13 @@
+substitutions:
+  _repository: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
+  _image: '${_repository}/hw_python'
+  _version: 'snapshot_1.0'
+
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/images/test_python', '.']
-
-images: ['us-central1-docker.pkg.dev/$PROJECT_ID/images/test_python']
+  args: ['build', '-t', '${_image}:${_version}', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_image}:${_version}', '.']
 
 options:
   logging: CLOUD_LOGGING_ONLY
