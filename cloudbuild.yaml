@@ -7,7 +7,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', '${_IMAGE}:${_VERSION}', '.']
+  args: ['push', '${_IMAGE}:${_VERSION}']
 
 options:
   logging: CLOUD_LOGGING_ONLY
