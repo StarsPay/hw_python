@@ -8,7 +8,7 @@ steps:
     entrypoint: 'bash'
     args:
       - '-c'
-      - 'echo valor do PROJECT_ID: $PROJECT_ID'
+      - 'echo valor do COMMIT_SHA: $COMMIT_SHA'
 
 
   # - name: 'bash'
