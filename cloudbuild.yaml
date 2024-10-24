@@ -5,20 +5,23 @@ substitutions:
 
 steps:
   - name: 'bash'
-    script: 'echo valor do COMMIT_SHA: $COMMIT_SHA'
+    script: 'echo valor do TRIGGER_BUILD_CONFIG_PATH: $TRIGGER_BUILD_CONFIG_PATH'
+
+
+
   # Passo 1: Validar se a tag já existe no repositório remoto
-  - name: 'gcr.io/cloud-builders/git'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        TAG_EXISTS=$(git ls-remote --tags origin refs/tags/${_VERSION_TAG})
-        if [ -n "$$TAG_EXISTS" ]; then
-          echo "Tag ${_VERSION_TAG} já existe. Interrompendo o build."
-          exit 0  # Não falha, mas interrompe o build
-        else
-          echo "Tag ${_VERSION_TAG} não existe. Continuando..."
-        fi
+  # - name: 'gcr.io/cloud-builders/git'
+  #   entrypoint: 'bash'
+  #   args:
+  #     - '-c'
+  #     - |
+  #       TAG_EXISTS=$(git ls-remote --tags origin refs/tags/${_VERSION_TAG})
+  #       if [ -n "$$TAG_EXISTS" ]; then
+  #         echo "Tag ${_VERSION_TAG} já existe. Interrompendo o build."
+  #         exit 0  # Não falha, mas interrompe o build
+  #       else
+  #         echo "Tag ${_VERSION_TAG} não existe. Continuando..."
+  #       fi
 
   # - name: 'gcr.io/cloud-builders/docker'
   #   args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
