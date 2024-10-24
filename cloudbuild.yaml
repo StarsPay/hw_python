@@ -9,6 +9,21 @@ steps:
     args:
       - '-c'
       - 'echo valor do COMMIT_SHA: $COMMIT_SHA'
+  - name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'echo valor do SHORT_SHA: $SHORT_SHA'
+  - name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'echo valor do REPO_FULL_NAME: $REPO_FULL_NAME'
+  - name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'echo valor do BRANCH_NAME: $BRANCH_NAME'
 
 
   # - name: 'bash'
