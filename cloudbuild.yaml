@@ -5,7 +5,7 @@ substitutions:
 
 steps:
   - name: 'bash'
-    script: 'echo $REPO_FULL_NAME'
+    script: 'echo valor do REPO_FULL_NAME: $REPO_FULL_NAME'
   # Passo 1: Validar se a tag já existe no repositório remoto
   - name: 'gcr.io/cloud-builders/git'
     entrypoint: 'bash'
