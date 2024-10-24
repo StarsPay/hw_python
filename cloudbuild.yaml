@@ -5,54 +5,19 @@ substitutions:
   _GITHUB_REPO: 'https://github.com/ORGANIZACAO/REPOSITORIO.git'
 
 steps:
-  - name: 'bash'
-    script: |
-      hostname
-      ls -lha
-      exit 1
-
-  # Clone o repositório
+  # Passo 1: Validar se a tag já existe no repositório remoto
   - name: 'gcr.io/cloud-builders/git'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        git clone https://github.com/ORGANIZACAO/REPOSITORIO.git REPOSITORIO
-
-  # Criar e aplicar a tag
-  - name: 'gcr.io/cloud-builders/git'
-    dir: 'REPOSITORIO'
-    args:
-      - tag
-      - v$BUILD_ID  # Usando o ID do build como tag, ou outro padrão de tag
-
-  # Enviar a tag para o repositório remoto
-  - name: 'gcr.io/cloud-builders/git'
-    dir: 'REPOSITORIO'
-    args:
-      - push
-      - origin
-      - --tags
-
-
-
-
-
-
-# Passo 1: Validar se a tag já existe no repositório remoto
-  # - name: 'gcr.io/cloud-builders/git'
-  #   entrypoint: 'bash'
-  #   args:
-  #     - '-c'
-  #     - |
-  #       TAG_EXISTS=$(git ls-remote --tags origin refs/tags/${_VERSION_TAG})
-  #       if [ -n "$TAG_EXISTS" ]; then
-  #         echo "Tag ${_VERSION_TAG} já existe. Interrompendo o build."
-  #         exit 1
-  #       else
-  #         echo "Tag ${_VERSION_TAG} não existe. Continuando..."
-  #       fi
-  #       |
+        TAG_EXISTS=$(git ls-remote --tags origin refs/tags/${_VERSION_TAG})
+        if [ -n "$TAG_EXISTS" ]; then
+          echo "Tag ${_VERSION_TAG} já existe. Interrompendo o build."
+          exit 0  # Não falha, mas interrompe o build
+        else
+          echo "Tag ${_VERSION_TAG} não existe. Continuando..."
+        fi
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
