@@ -9,8 +9,8 @@ steps:
     args:
       - '-c'
       - |
-        tag ${_VERSION}
-        push origin --tags
+        git tag ${_VERSION}
+        git push origin --tags
 
 
 
