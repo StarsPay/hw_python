@@ -2,9 +2,10 @@ substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
   _VERSION: 'snapshot_1.3'
-  _GITHUB_REPO: 'https://github.com/ORGANIZACAO/REPOSITORIO.git'
 
 steps:
+  - name: 'bash'
+    script: 'echo $REPO_FULL_NAME'
   # Passo 1: Validar se a tag já existe no repositório remoto
   - name: 'gcr.io/cloud-builders/git'
     entrypoint: 'bash'
@@ -19,10 +20,10 @@ steps:
           echo "Tag ${_VERSION_TAG} não existe. Continuando..."
         fi
 
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${_IMAGE}:${_VERSION}']
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['push', '${_IMAGE}:${_VERSION}']
 
 options:
   logging: CLOUD_LOGGING_ONLY
