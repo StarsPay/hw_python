@@ -5,18 +5,17 @@ substitutions:
 
 steps:
   - name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
     args:
-      - 'checkout'
-      - '$COMMIT_SHA'
-  - name: 'gcr.io/cloud-builders/git'
-    args:
-      - 'tag'
-      - '${_VERSION}'
-  - name: 'gcr.io/cloud-builders/git'
-    args:
-      - 'push'
-      - 'origin'
-      - '--tags'
+      - '-c'
+      - |
+        tag ${_VERSION}
+        push origin --tags
+
+
+
+  
+  
 
 
 
