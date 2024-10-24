@@ -12,7 +12,7 @@ steps:
       - '-c'
       - |
         TAG_EXISTS=$(git ls-remote --tags origin refs/tags/${_VERSION_TAG})
-        if [ -n "$TAG_EXISTS" ]; then
+        if [ -n "TAG_EXISTS" ]; then
           echo "Tag ${_VERSION_TAG} já existe. Interrompendo o build."
           exit 0  # Não falha, mas interrompe o build
         else
