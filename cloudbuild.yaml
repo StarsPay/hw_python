@@ -9,6 +9,7 @@ steps:
     args:
       - '-c'
       - |
+        echo _____________________________________________________________
         git tag ${_VERSION}
         git push origin --tags
 
