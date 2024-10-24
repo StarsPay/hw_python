@@ -5,61 +5,20 @@ substitutions:
 
 steps:
   - name: 'gcr.io/cloud-builders/git'
-    entrypoint: 'bash'
     args:
-      - '-c'
-      - 'echo valor do COMMIT_SHA: $COMMIT_SHA'
+      - 'checkout'
+      - '$COMMIT_SHA'
   - name: 'gcr.io/cloud-builders/git'
-    entrypoint: 'bash'
     args:
-      - '-c'
-      - 'echo valor do SHORT_SHA: $SHORT_SHA'
+      - 'tag'
+      - '${_VERSION}'
   - name: 'gcr.io/cloud-builders/git'
-    entrypoint: 'bash'
     args:
-      - '-c'
-      - 'echo valor do REPO_FULL_NAME: $REPO_FULL_NAME'
-  - name: 'gcr.io/cloud-builders/git'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - 'echo valor do BRANCH_NAME: $BRANCH_NAME'
+      - 'push'
+      - 'origin'
+      - '--tags'
 
 
-  # - name: 'bash'
-  #   script: |
-  #     echo valor do PROJECT_ID: $PROJECT_ID
-  #     echo valor do BUILD_ID: $BUILD_ID
-  #     echo valor do PROJECT_NUMBER: $PROJECT_NUMBER
-  #     echo valor do LOCATION: $LOCATION
-  #     echo valor do TRIGGER_NAME: $TRIGGER_NAME
-  #     echo valor do COMMIT_SHA: $COMMIT_SHA
-  #     echo valor do REVISION_ID: $REVISION_ID
-  #     echo valor do SHORT_SHA: $SHORT_SHA
-  #     echo valor do REPO_NAME: $REPO_NAME
-  #     echo valor do REPO_FULL_NAME: $REPO_FULL_NAME
-  #     echo valor do BRANCH_NAME: $BRANCH_NAME
-  #     echo valor do TAG_NAME: $TAG_NAME
-  #     echo valor do REF_NAME: $REF_NAME
-  #     echo valor do TRIGGER_BUILD_CONFIG_PATH: $TRIGGER_BUILD_CONFIG_PATH
-  #     echo valor do SERVICE_ACCOUNT_EMAIL: $SERVICE_ACCOUNT_EMAIL
-  #     echo valor do SERVICE_ACCOUNT: $SERVICE_ACCOUNT
-  #     echo valor do _HEAD_BRANCH: $_HEAD_BRANCH
-  #     echo valor do _BASE_BRANCH: $_BASE_BRANCH
-  #     echo valor do _HEAD_REPO_URL: $_HEAD_REPO_URL
-  #     echo valor do _PR_NUMBER: $_PR_NUMBER
-  #     echo valor do TRIGGER_NAME: $TRIGGER_NAME
-  #     echo valor do COMMIT_SHA: $COMMIT_SHA
-  #     echo valor do REVISION_ID: $REVISION_ID
-  #     echo valor do SHORT_SHA: $SHORT_SHA
-  #     echo valor do REPO_NAME: $REPO_NAME
-  #     echo valor do REPO_FULL_NAME: $REPO_FULL_NAME
-  #     echo valor do BRANCH_NAME: $BRANCH_NAME
-  #     echo valor do TAG_NAME: $TAG_NAME
-  #     echo valor do REF_NAME: $REF_NAME
-  #     echo valor do TRIGGER_BUILD_CONFIG_PATH: $TRIGGER_BUILD_CONFIG_PATH
-  #     echo valor do SERVICE_ACCOUNT_EMAIL: $SERVICE_ACCOUNT_EMAIL
-  #     echo valor do SERVICE_ACCOUNT: $SERVICE_ACCOUNT
 
 
 
