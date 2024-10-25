@@ -1,46 +1,55 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _VERSION: 'snapshot_1.3'
+  _VERSION: 'snapshot_1.4'
 
 steps:
-  - name: 'gcr.io/cloud-builders/git'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        echo _____________________________________________________________
-        git tag ${_VERSION}
-        git push origin --tags
-
-
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_IMAGE}:${_VERSION}']
 
   
-  
-
-
-
-
-
-
-  # Passo 1: Validar se a tag já existe no repositório remoto
+  # # 1. Verifica se já existe uma tag associada ao commit atual e, se houver, cancela o build.
   # - name: 'gcr.io/cloud-builders/git'
   #   entrypoint: 'bash'
   #   args:
   #     - '-c'
   #     - |
-  #       TAG_EXISTS=$(git ls-remote --tags origin refs/tags/${_VERSION_TAG})
-  #       if [ -n "$$TAG_EXISTS" ]; then
-  #         echo "Tag ${_VERSION_TAG} já existe. Interrompendo o build."
-  #         exit 0  # Não falha, mas interrompe o build
-  #       else
-  #         echo "Tag ${_VERSION_TAG} não existe. Continuando..."
+  #       if git describe --exact-match --tags "$(git rev-parse HEAD)"; then
+  #         echo "Já existe uma tag para este commit. Cancelando o build."
+  #         exit 1
   #       fi
 
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['push', '${_IMAGE}:${_VERSION}']
+  # # 2. Obtém todas as tags de versão, identifica a maior e define a próxima versão.
+  # - name: 'gcr.io/cloud-builders/git'
+  #   id: 'get-next-version'
+  #   entrypoint: 'bash'
+  #   args:
+  #     - '-c'
+  #     - |
+  #       latest_version=$(git tag -l "v[0-9]*" | sort -V | tail -n 1)
+        
+  #       if [[ -z "$latest_version" ]]; then
+  #         # Se não houver versão existente, começa com v1.0.0
+  #         next_version="v1.0.0"
+  #       else
+  #         # Define o incremento com base na branch
+  #         IFS='.' read -r major minor patch <<< "${latest_version//v/}"
+  #         if [[ "$BRANCH_NAME" == "main" ]]; then
+  #           # Para a branch 'main', incrementa a major version para release
+  #           next_version="v$((major+1)).0.0"
+  #         else
+  #           # Para outras branches, incrementa o minor version para snapshot
+  #           next_version="v$major.$((minor+1)).0-snapshot"
+  #         fi
+  #       fi
+
+  #       echo "Próxima versão: $next_version"
+  #       echo "$next_version" > NEXT_VERSION
+
+  # 3. Constrói a imagem com a versão calculada e realiza o push
+  
 
 options:
   logging: CLOUD_LOGGING_ONLY
