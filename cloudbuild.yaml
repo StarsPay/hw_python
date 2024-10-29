@@ -28,6 +28,16 @@ steps:
   - name: 'ssh'
     path: /root/.ssh
 
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - -c
+  - |
+    pwd
+    ls -lhas
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 
 
 
