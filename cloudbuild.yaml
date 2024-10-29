@@ -5,11 +5,11 @@ substitutions:
 
 steps:
   - name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args: 
-  - '-c'
-  - |
-    echo $REPO_FULL_NAME
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo $REPO_FULL_NAME
 
 
   # - name: 'gcr.io/cloud-builders/docker'
