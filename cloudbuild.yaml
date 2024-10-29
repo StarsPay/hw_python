@@ -37,17 +37,26 @@ steps:
   args:
   - checkout
   - $COMMIT_SHA
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
   args:
   - tag
   - ${_VERSION}
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
   args:
   - push
   - origin
   - --tags
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 
 
 
