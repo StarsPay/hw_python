@@ -29,35 +29,22 @@ steps:
   args:
   - clone
   - git@github.com:$REPO_FULL_NAME
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
   args:
   - checkout
   - $COMMIT_SHA
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
   args:
   - tag
   - ${_VERSION}
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
   args:
-  - git
   - push
   - origin
   - --tags
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
 
 
 
