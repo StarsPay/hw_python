@@ -6,7 +6,7 @@ substitutions:
 
 availableSecrets:
   secretManager:
-  - versionName: projects/buoyant-notch-437915-p4/secrets/passgithub/versions/latest
+  - versionName: projects/592977005222/secrets/passgithub/versions/latest
     env: 'SSH_KEY'
 
 # Access the id_github file from Secret Manager, and setup SSH
