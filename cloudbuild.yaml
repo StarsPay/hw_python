@@ -15,40 +15,38 @@ steps:
   secretEnv: ['SSH_KEY']
   entrypoint: 'bash'
   args:
-  - -xc
+  - -c
   - |
     echo "$$SSH_KEY" >> /root/.ssh/id_rsa
     chmod 400 /root/.ssh/id_rsa
     cp known_hosts.github /root/.ssh/known_hosts
-    git clone git@github.com:$REPO_FULL_NAME.git repo
-    cd repo
-    git checkout $COMMIT_SHA
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+- name: 'gcr.io/cloud-builders/git'
+  args:
+  - clone
+  - ${_GITHUB}
+  - repo
+
+- name: 'gcr.io/cloud-builders/git'
+  dir: 'repo'
+  args:
+  - checkout
+  - $COMMIT_SHA
+
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - -xc
+  - |
     git tag ${_VERSION}
     git push origin --tags
     ls -lha /root/.ssh
   volumes:
   - name: 'ssh'
     path: /root/.ssh
-
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args:
-  - -xc
-  - |
-    pwd
-    ls -lhas
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
-
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args:
-  - -xc
-  - |
-    pwd
-    ls -lhas
-    ls -lha /root/.ssh
 
 
 
