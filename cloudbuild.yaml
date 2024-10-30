@@ -2,14 +2,14 @@ substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
   _VERSION: 'snapshot_1.5'
-  _GITHUB: 'https://github.com/$REPO_FULL_NAME'
+  _GITHUB: 'git://github.com/$REPO_FULL_NAME.git'
 
 availableSecrets:
   secretManager:
   - versionName: projects/592977005222/secrets/passgithub/versions/latest
     env: 'SSH_KEY'
 
-# Access the id_github file from Secret Manager, and setup SSH
+# Access the id_rsa file from Secret Manager, and setup SSH
 steps:
 - name: 'gcr.io/cloud-builders/git'
   secretEnv: ['SSH_KEY']
