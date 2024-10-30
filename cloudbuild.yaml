@@ -1,7 +1,7 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _VERSION: 'snapshot_1.6'
+  _VERSION: 'snapshot_1.7'
 
 availableSecrets:
   secretManager:
