@@ -36,7 +36,8 @@ steps:
   dir: 'repo'
   args:
   - checkout
-  - $COMMIT_SHA
+  - 30251eeea100725dffb9e6a12918eaf24b18d560
+  # - $COMMIT_SHA
 
 - name: 'gcr.io/cloud-builders/git'
   dir: repo
