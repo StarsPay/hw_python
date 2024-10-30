@@ -39,13 +39,14 @@ steps:
   - $COMMIT_SHA
 
 - name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
+  dir: repo
   args:
-  - -xc
-  - |
-    git tag ${_VERSION}
-    git push origin --tags
-    ls -lha /root/.ssh
+  - tag ${_VERSION}
+
+- name: 'gcr.io/cloud-builders/git'
+  dir: repo
+  args:
+  - git push origin ${_VERSION}
   volumes:
   - name: 'ssh'
     path: /root/.ssh
