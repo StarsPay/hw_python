@@ -44,7 +44,6 @@ steps:
 
 
 
-
   # 3. Constrói a imagem com a versão calculada e realiza o push
   # - name: 'gcr.io/cloud-builders/docker'
   #   args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
