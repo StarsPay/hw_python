@@ -22,38 +22,22 @@ steps:
   volumes:
   - name: 'ssh'
     path: /root/.ssh
+  - name: 'version'
+    path: /version
 
 - name: 'gcr.io/cloud-builders/git'
   args:
-  - clone
-  - git@github.com:$REPO_FULL_NAME.git
-  - repo
-  volumes:
-  - name: 'ssh'
-    path: '/root/.ssh'
+  git clone git@github.com:$REPO_FULL_NAME.git repo
+  cd repo
+  git checkout $COMMIT_SHA
+  if [ "$BRANCH_NAME" == "main" ]; then
+    TAG_NAME="v1.0" # Aqui você pode definir o número da versão como desejar
+  else
+    TAG_NAME="snapshot-$(date +%Y%m%d%H%M%S)"
+  fi
+  git tag $$TAG_NAME
+  git push origin $$TAG_NAME
 
-- name: 'gcr.io/cloud-builders/git'
-  dir: 'repo'
-  args:
-  - checkout
-  - 30251eeea100725dffb9e6a12918eaf24b18d560
-  # - $COMMIT_SHA
-
-- name: 'gcr.io/cloud-builders/git'
-  dir: repo
-  args:
-  - tag
-  - ${_VERSION}
-
-- name: 'gcr.io/cloud-builders/git'
-  dir: repo
-  args:
-  - push
-  - origin
-  - ${_VERSION}
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
 
 
 
