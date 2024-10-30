@@ -1,8 +1,7 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _VERSION: 'snapshot_1.5'
-  _GITHUB: 'git@github.com:$REPO_FULL_NAME.git'
+  _VERSION: 'snapshot_1.6'
 
 availableSecrets:
   secretManager:
@@ -25,9 +24,10 @@ steps:
     path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
   args:
-  - git clone ${_GITHUB} repo
+  - clone
+  - git@github.com:$REPO_FULL_NAME.git
+  - repo
   volumes:
   - name: 'ssh'
     path: '/root/.ssh'
