@@ -29,6 +29,9 @@ steps:
   - clone
   - ${_GITHUB}
   - repo
+  volumes:
+  - name: 'ssh'
+    path: '/root/.ssh'
 
 - name: 'gcr.io/cloud-builders/git'
   dir: 'repo'
