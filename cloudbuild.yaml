@@ -41,12 +41,15 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   dir: repo
   args:
-  - tag ${_VERSION}
+  - tag
+  - ${_VERSION}
 
 - name: 'gcr.io/cloud-builders/git'
   dir: repo
   args:
-  - git push origin ${_VERSION}
+  - push
+  - origin
+  - ${_VERSION}
   volumes:
   - name: 'ssh'
     path: /root/.ssh
