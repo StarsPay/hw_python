@@ -25,6 +25,7 @@ steps:
     git checkout $COMMIT_SHA
     git tag ${_VERSION}
     git push origin --tags
+    ls -lha /root/.ssh
   volumes:
   - name: 'ssh'
     path: /root/.ssh
@@ -36,9 +37,7 @@ steps:
   - |
     pwd
     ls -lhas
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
+    ls -lha /root/.ssh
 
 
 
