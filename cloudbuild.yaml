@@ -2,7 +2,7 @@ substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
   _VERSION: 'snapshot_1.5'
-  _GITHUB: '  - git@github.com:$REPO_FULL_NAME.git'
+  _GITHUB: 'git@github.com:$REPO_FULL_NAME.git'
 
 availableSecrets:
   secretManager:
