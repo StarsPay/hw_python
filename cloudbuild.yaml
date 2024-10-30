@@ -26,7 +26,7 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
   args:
-  - xc
+  - -xc
   - |
     git clone git@github.com:$REPO_FULL_NAME.git repo
     cd repo
