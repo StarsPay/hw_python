@@ -9,7 +9,7 @@ substitutions:
 #   - versionName: projects/592977005222/secrets/known_hosts/versions/latest
 #     env: 'KNOWN_HOSTS'
 
-# # Access the id_rsa file from Secret Manager, and setup SSH
+# Access the id_rsa file from Secret Manager, and setup SSH
 steps:
 # - name: 'gcr.io/cloud-builders/git'
 #   secretEnv: ['SSH_KEY', 'KNOWN_HOSTS']
