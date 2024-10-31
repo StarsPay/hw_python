@@ -40,9 +40,9 @@ steps:
     fi
     git tag $$TAG_NAME
     git push origin $$TAG_NAME
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
+  # volumes:
+  # - name: 'ssh'
+  #   path: /root/.ssh
 
 
 
