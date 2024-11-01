@@ -3,14 +3,14 @@ substitutions:
   _IMAGE: '${_REPOSITORY}/hw_python'
   _TAG: 'v1.0'
 
+    # apt update
+    # apt install gh
 steps:
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v1.0'
   entrypoint: 'bash'
   args:
   - -xc
   - |
-    apt update
-    apt install gh
     gh release create ${_TAG}
     gh release create ${_TAG} --title "${_TAG}" --notes "this is a private release"
     git clone git@github.com:$REPO_FULL_NAME.git repo
