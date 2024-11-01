@@ -1,35 +1,18 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
+  _TAG: 'v1.0'
 
-# availableSecrets:
-#   secretManager:
-#   - versionName: projects/592977005222/secrets/passgithub/versions/latest
-#     env: 'SSH_KEY'
-#   - versionName: projects/592977005222/secrets/known_hosts/versions/latest
-#     env: 'KNOWN_HOSTS'
-
-# Access the id_rsa file from Secret Manager, and setup SSH
 steps:
-# - name: 'gcr.io/cloud-builders/git'
-#   secretEnv: ['SSH_KEY', 'KNOWN_HOSTS']
-#   entrypoint: 'bash'
-#   args:
-#   - -c
-#   - |
-#     echo "$$SSH_KEY" >> /root/.ssh/id_rsa
-#     chmod 400 /root/.ssh/id_rsa
-#     echo "$$KNOWN_HOSTS" >> /root/.ssh/known_hosts
-#     chmod 400 /root/.ssh/known_hosts
-#   volumes:
-#   - name: 'ssh'
-#     path: /root/.ssh
-
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v1.0'
   entrypoint: 'bash'
   args:
   - -xc
   - |
+    apt update
+    apt install gh
+    gh release create ${_TAG}
+    gh release create ${_TAG} --title "${_TAG}" --notes "this is a private release"
     git clone git@github.com:$REPO_FULL_NAME.git repo
     cd repo
     git checkout $COMMIT_SHA
@@ -40,11 +23,6 @@ steps:
     fi
     git tag $$TAG_NAME
     git push origin $$TAG_NAME
-  # volumes:
-  # - name: 'ssh'
-  #   path: /root/.ssh
-
-
 
   # 3. Constrói a imagem com a versão calculada e realiza o push
   # - name: 'gcr.io/cloud-builders/docker'
