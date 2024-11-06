@@ -4,13 +4,14 @@ substitutions:
   _TAG: 'v1.0'
 
 steps:
-- name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v1.0'
+- name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:latest'
   entrypoint: 'bash'
   args:
   - -xc
   - |
     pwd
     ls -lha
+    gh auth login --with-token < /root/.ssh/sshdevopssignup
 
   # gh release create ${_TAG}
   # gh release create ${_TAG} --title "${_TAG}" --notes "this is a private release"
