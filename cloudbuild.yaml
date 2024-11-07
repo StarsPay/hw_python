@@ -1,7 +1,7 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _TAG: 'v0.2'
+  _TAG: 'v0.3'
 
 steps:
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.5'
@@ -15,7 +15,7 @@ steps:
     if [ "$BRANCH_NAME" == "main" ]; then
       TAG_NAME="${_TAG}"
       gh auth login --with-token < /root/token
-      gh release create $$TAG_NAME --title "$$TAG_NAME" --notes "This is a private release"
+      gh release create $$TAG_NAME --title "Release $$TAG_NAME"
     else
       TAG_NAME="snapshot-$(date +%Y%m%d%H%M%S)"
       git tag $$TAG_NAME
