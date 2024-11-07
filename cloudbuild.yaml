@@ -4,7 +4,7 @@ substitutions:
   _TAG: 'v0.2'
 
 steps:
-- name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.4'
+- name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.5'
   entrypoint: 'bash'
   args:
   - -xc
@@ -14,6 +14,7 @@ steps:
     git checkout $COMMIT_SHA
     if [ "$BRANCH_NAME" == "main" ]; then
       TAG_NAME="${_TAG}"
+      gh auth login --with-token < /root/token
       gh release create $$TAG_NAME --title "$$TAG_NAME" --notes "This is a private release"
     else
       TAG_NAME="snapshot-$(date +%Y%m%d%H%M%S)"
