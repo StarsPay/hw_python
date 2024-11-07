@@ -14,14 +14,13 @@ steps:
     git checkout $COMMIT_SHA
     if [ "$BRANCH_NAME" == "main" ]; then
       TAG_NAME="${_TAG}" # Aqui você pode definir o número da versão como desejar
-      gh release create ${_TAG}
-      gh release create ${_TAG} --title "${_TAG}" --notes "this is a private release"
+      gh release create ${_TAG} --title "${_TAG}" --notes "This is a private release"
     else
       TAG_NAME="snapshot-$(date +%Y%m%d%H%M%S)"
+      git tag $$TAG_NAME
+      git push origin $$TAG_NAME
     fi
     echo $$TAG_NAME >> tagname
-    git tag $$TAG_NAME
-    git push origin $$TAG_NAME
 
   # 3. Constrói a imagem com a versão calculada e realiza o push
   # - name: 'gcr.io/cloud-builders/docker'
