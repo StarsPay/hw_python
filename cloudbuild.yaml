@@ -1,0 +1,33 @@
+substitutions:
+  _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
+  _IMAGE: '${_REPOSITORY}/hw_python'
+  _TAG: 'v0.1'
+
+steps:
+- name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.4'
+  entrypoint: 'bash'
+  args:
+  - -xc
+  - |
+    git clone git@github.com:/$REPO_FULL_NAME.git repo
+    cd repo
+    git checkout $COMMIT_SHA
+    if [ "$BRANCH_NAME" == "main" ]; then
+      TAG_NAME="${_TAG}" # Aqui você pode definir o número da versão como desejar
+      gh release create ${_TAG} --title "${_TAG}" --notes "This is a private release"
+    else
+      TAG_NAME="snapshot-$(date +%Y%m%d%H%M%S)"
+      git tag $$TAG_NAME
+      git push origin $$TAG_NAME
+    fi
+    echo "$$TAG_NAME" >> tagname
+    cat tagname
+
+  # 3. Constrói a imagem com a versão calculada e realiza o push
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['push', '${_IMAGE}:${_VERSION}']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
