@@ -4,7 +4,7 @@ substitutions:
   _TAG: 'v1.0'
 
 steps:
-- name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.1'
+- name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.2'
   entrypoint: 'bash'
   args:
   - -xc
