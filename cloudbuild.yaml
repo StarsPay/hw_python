@@ -1,7 +1,7 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _TAG: 'v0.1'
+  _TAG: 'v0.2'
 
 steps:
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.4'
@@ -13,8 +13,8 @@ steps:
     cd repo
     git checkout $COMMIT_SHA
     if [ "$BRANCH_NAME" == "main" ]; then
-      TAG_NAME="${_TAG}" # Aqui você pode definir o número da versão como desejar
-      gh release create ${_TAG} --title "${_TAG}" --notes "This is a private release"
+      TAG_NAME="${_TAG}"
+      gh release create $$TAG_NAME --title "$$TAG_NAME" --notes "This is a private release"
     else
       TAG_NAME="snapshot-$(date +%Y%m%d%H%M%S)"
       git tag $$TAG_NAME
