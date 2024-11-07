@@ -1,7 +1,7 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _TAG: 'v0.3'
+  _TAG: 'v0.4'
 
 steps:
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.5'
@@ -15,20 +15,21 @@ steps:
     if [ "$BRANCH_NAME" == "main" ]; then
       TAG_NAME="${_TAG}"
       gh auth login --with-token < /root/token
-      gh release create $$TAG_NAME --title "Release $$TAG_NAME"
+      gh release create $$TAG_NAME --title "Release $$TAG_NAME" --notes "Docker image published on ${_IMAGE}:$$TAG_NAME"
     else
       TAG_NAME="snapshot-$(date +%Y%m%d%H%M%S)"
       git tag $$TAG_NAME
       git push origin $$TAG_NAME
     fi
     echo "$$TAG_NAME" >> tagname
-    cat tagname
-
-  # 3. Constrói a imagem com a versão calculada e realiza o push
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['build', '-t', '${_IMAGE}:${_VERSION}', '.']
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['push', '${_IMAGE}:${_VERSION}']
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: "bash"
+  args:
+  - -xc
+  - |
+    export ver=$(cat tagname)
+    docker build -t ${_IMAGE}:$$ver .
+    docker push ${_IMAGE}:$$ver
 
 options:
   logging: CLOUD_LOGGING_ONLY
