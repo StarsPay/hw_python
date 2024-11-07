@@ -21,15 +21,21 @@ steps:
       git tag $$TAG_NAME
       git push origin $$TAG_NAME
     fi
-    echo "$$TAG_NAME" >> tagname
+    echo "$$TAG_NAME" >> /root/tag/tag
+  volumes:
+    - name: 'tag'
+      path: /root/tag
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: "bash"
   args:
   - -xc
   - |
-    export ver=$(cat tagname)
-    docker build -t ${_IMAGE}:$$ver .
-    docker push ${_IMAGE}:$$ver
+    export tag=$(cat /root/tag/tag)
+    docker build -t ${_IMAGE}:$$tag .
+    docker push ${_IMAGE}:$$tag
+  volumes:
+    - name: 'tag'
+      path: /root/tag
 
 options:
   logging: CLOUD_LOGGING_ONLY
