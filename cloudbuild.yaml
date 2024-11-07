@@ -1,7 +1,7 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _TAG: 'v0.4'
+  _TAG: 'v0.5'
 
 steps:
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.5'
