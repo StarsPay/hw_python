@@ -1,7 +1,7 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _TAG: 'v0.7'
+  _PREFIX: 'v1'
 
 steps:
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.5'
@@ -13,7 +13,14 @@ steps:
     cd repo
     git checkout $COMMIT_SHA
     if [ "$BRANCH_NAME" == "main" ]; then
-      TAG_NAME="${_TAG}"
+      LAST_TAG=$(git tag | grep "^${_PREFIX}" | sort -V | tail -n 1)
+      if [[ -z "$$LAST_TAG" ]]; then
+        NEW_TAG="${_PREFIX}.0"
+      else
+        # Incrementa a última subversão (ex: v1.5 -> v1.6)
+        NEW_TAG="$${LAST_TAG%.*}.$$(($${LAST_TAG##*.} + 1))"
+    fi
+    echo "Nova tag a ser criada: $$NEW_TAG"
       gh auth login --with-token < /root/token
       gh release create $$TAG_NAME --title "Release $$TAG_NAME" --notes "Docker image published on ${_IMAGE}:$$TAG_NAME"
     else
