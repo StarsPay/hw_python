@@ -7,7 +7,7 @@ steps:
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.5'
   entrypoint: 'bash'
   args:
-  - -xc
+  - -c
   - |
     git clone git@github.com:/$REPO_FULL_NAME.git repo
     cd repo
@@ -34,7 +34,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: "bash"
   args:
-  - -xc
+  - -c
   - |
     export tag=$(cat /root/tag/tag)
     docker build -t ${_IMAGE}:$$tag .
