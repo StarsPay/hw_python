@@ -1,7 +1,7 @@
 substitutions:
   _REPOSITORY: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/images'
   _IMAGE: '${_REPOSITORY}/hw_python'
-  _TAG: 'v0.6'
+  _TAG: 'v0.7'
 
 steps:
 - name: 'us-central1-docker.pkg.dev/buoyant-notch-437915-p4/devops/gitwithgh:v0.5'
@@ -9,9 +9,9 @@ steps:
   args:
   - -xc
   - |
-    # git clone git@github.com:/$REPO_FULL_NAME.git repo
-    # cd repo
-    # git checkout $COMMIT_SHA
+    git clone git@github.com:/$REPO_FULL_NAME.git repo
+    cd repo
+    git checkout $COMMIT_SHA
     if [ "$BRANCH_NAME" == "main" ]; then
       TAG_NAME="${_TAG}"
       gh auth login --with-token < /root/token
