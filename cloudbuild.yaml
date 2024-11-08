@@ -19,16 +19,15 @@ steps:
       else
         # Incrementa a última subversão (ex: v1.5 -> v1.6)
         NEW_TAG="$${LAST_TAG%.*}.$$(($${LAST_TAG##*.} + 1))"
-    fi
-    echo "Nova tag a ser criada: $$NEW_TAG"
+      fi
       gh auth login --with-token < /root/token
-      gh release create $$TAG_NAME --title "Release $$TAG_NAME" --notes "Docker image published on ${_IMAGE}:$$TAG_NAME"
+      gh release create $$NEW_TAG --title "Release $$NEW_TAG" --notes "Docker image published on ${_IMAGE}:$$NEW_TAG"
     else
-      TAG_NAME="snapshot-$(date +%Y%m%d%H%M%S)"
-      git tag $$TAG_NAME
-      git push origin $$TAG_NAME
+      NEW_TAG="snapshot-$(date +%Y%m%d%H%M%S)"
+      git tag $$NEW_TAG
+      git push origin $$NEW_TAG
     fi
-    echo "$$TAG_NAME" >> /root/tag/tag
+    echo "$$NEW_TAG" >> /root/tag/tag
   volumes:
     - name: 'tag'
       path: /root/tag
